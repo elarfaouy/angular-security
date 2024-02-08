@@ -6,9 +6,9 @@ import {AppComponent} from './app.component';
 import {LoginComponent} from './components/login/login.component';
 import {RegisterComponent} from './components/register/register.component';
 import {FormsModule} from "@angular/forms";
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {HttpClientModule, provideHttpClient, withInterceptors} from "@angular/common/http";
 import {HomeComponent} from './components/home/home.component';
-import {AuthenticationInterceptor} from "./authentication/authentication.interceptor";
+import {authenticationInterceptor} from "./interceptor/authentication/authentication.interceptor";
 
 @NgModule({
   declarations: [
@@ -24,7 +24,7 @@ import {AuthenticationInterceptor} from "./authentication/authentication.interce
     HttpClientModule,
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true}
+    provideHttpClient(withInterceptors([authenticationInterceptor]))
   ],
   bootstrap: [AppComponent]
 })
