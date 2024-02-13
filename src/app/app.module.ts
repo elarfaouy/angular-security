@@ -9,19 +9,29 @@ import {FormsModule} from "@angular/forms";
 import {HttpClientModule, provideHttpClient, withInterceptors} from "@angular/common/http";
 import {HomeComponent} from './components/home/home.component';
 import {authenticationInterceptor} from "./interceptor/authentication/authentication.interceptor";
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ToastrModule} from "ngx-toastr";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(
+      {
+        timeOut: 2000,
+      }
+    ),
   ],
   providers: [
     provideHttpClient(withInterceptors([authenticationInterceptor]))

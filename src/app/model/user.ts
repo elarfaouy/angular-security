@@ -1,5 +1,6 @@
 export interface User {
   username: string;
   password: string;
-  role: object | null;
+  role: object | string | null;
+  permissions: string[] | null;
 }

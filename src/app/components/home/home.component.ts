@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.secured.secured().subscribe(
+    this.secured.securedUserWithGet().subscribe(
       value => {
         this.welcome = value["message"];
       }
