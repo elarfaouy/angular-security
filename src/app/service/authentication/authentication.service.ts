@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {catchError, map, Observable, of, throwError} from "rxjs";
+import {catchError, map, Observable, of, tap, throwError} from "rxjs";
 import {User} from "../../model/user";
 import {Response} from "../../model/response";
 import {ToastrService} from "ngx-toastr";
@@ -10,9 +10,26 @@ import {ToastrService} from "ngx-toastr";
 })
 export class AuthenticationService {
   private url: string = "http://localhost:8080/api/auth/";
+  private _user!: User;
 
   constructor(private http: HttpClient,
               private toast: ToastrService) {
+  }
+
+  set user(user: User) {
+    this._user = user;
+  }
+
+  get user(): Observable<User> {
+    if (!this._user) {
+      let userObservable = this.profile();
+      userObservable.subscribe(
+        (user) => this.user = user
+      );
+      return userObservable;
+    }
+
+    return of(this._user);
   }
 
   login(user: User): Observable<Response> {
@@ -55,5 +72,17 @@ export class AuthenticationService {
     this.toast.error("You are not authenticated", "Error")
 
     return of(false);
+  }
+
+  hasRightAuthority(role: string): Observable<boolean> {
+    return this.user.pipe(
+      map(user => user.role == role),
+      tap((value) => {
+          if (!value) {
+            this.toast.error("You don't have the right authority", "Error");
+          }
+        }
+      )
+    );
   }
 }

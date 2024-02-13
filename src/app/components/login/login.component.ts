@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {AuthenticationService} from "../../service/authentication/authentication.service";
 import {User} from "../../model/user";
-import {ToastrService} from "ngx-toastr";
 import {Router} from "@angular/router";
 
 @Component({
