@@ -1,0 +1,11 @@
+<p>profile works!</p>
+
+<div>
+  <p>username: {{ user.username }}</p>
+  <p>role: {{ user.role }}</p>
+  <p>permissions: </p>
+  <ul>
+    <li *ngFor="let permission of user.permissions">{{ permission }}</li>
+  </ul>
+
+</div>
